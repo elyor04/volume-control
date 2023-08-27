@@ -128,15 +128,6 @@ while cap.isOpened():
             mp_drawing.draw_landmarks(image, landmarks, mp_hands.HAND_CONNECTIONS)
 
     if hand_landmarks:
-        cv.putText(
-            image,
-            f"{percent}",
-            (5, 20),
-            cv.FONT_HERSHEY_COMPLEX_SMALL,
-            1.0,
-            (255, 0, 0),
-            1,
-        )
         if pt1 and pt2:
             cv.line(image, pt1, pt2, (255, 0, 0), 3)
 
