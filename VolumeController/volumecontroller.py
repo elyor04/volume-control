@@ -33,10 +33,8 @@ elif platform == "windows":
         def __init__(self) -> None:
             devices = AudioUtilities.GetSpeakers()
             interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-
             self.device = cast(interface, POINTER(IAudioEndpointVolume))
             self.volumes = self._range(*self.device.GetVolumeRange())
-            self._n = len(self.volumes) - 1
 
         def _range(self, r1: float, r2: float, r3: float) -> list:
             rList = list()
@@ -45,10 +43,10 @@ elif platform == "windows":
                 r1 += r3
             return rList
 
-        def setVolume(self, volumeIdx: int = None, volume: float = None) -> None:
-            if volumeIdx is not None:
-                volume = self.volumes[min(volumeIdx, self._n - 5)]
-            self.device.SetMasterVolumeLevel(volume, None)
+        def setVolume(self, volume: int) -> None:
+            volume = int(len(self.volumes) / 100 * volume)
+            volume = max(min(volume, len(self.volumes) - 1), 0)
+            self.device.SetMasterVolumeLevel(self.volumes[volume], None)
 
         def getVolume(self) -> float:
             return self.device.GetMasterVolumeLevel()
