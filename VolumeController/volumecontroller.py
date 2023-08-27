@@ -34,34 +34,34 @@ elif platform == "windows":
             devices = AudioUtilities.GetSpeakers()
             interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 
-            self.volume = cast(interface, POINTER(IAudioEndpointVolume))
-            self.vol_vals = self._getRange(*self.volume.GetVolumeRange())
-            self._val_n = len(self.vol_vals) - 1
+            self.device = cast(interface, POINTER(IAudioEndpointVolume))
+            self.volumes = self._range(*self.device.GetVolumeRange())
+            self._n = len(self.volumeRange) - 1
 
-        def _getRange(self, r1: float, r2: float, r3: float) -> list:
-            r_lst = list()
+        def _range(self, r1: float, r2: float, r3: float) -> list:
+            rList = list()
             while r1 <= r2:
-                r_lst.append(r1)
+                rList.append(r1)
                 r1 += r3
-            return r_lst
+            return rList
 
-        def setVolume(self, vol_index: int = None, vol_val: float = None) -> None:
-            if vol_index is not None:
-                vol_val = self.vol_vals[min(vol_index, self._val_n - 5)]
-            self.volume.SetMasterVolumeLevel(vol_val, None)
+        def setVolume(self, volumeIdx: int = None, volume: float = None) -> None:
+            if volumeIdx is not None:
+                volume = self.volumes[min(volumeIdx, self._n - 5)]
+            self.device.SetMasterVolumeLevel(volume, None)
 
         def getVolume(self) -> float:
-            return self.volume.GetMasterVolumeLevel()
+            return self.device.GetMasterVolumeLevel()
 
 elif platform == "linux":
     from alsaaudio import Mixer
 
     class VolumeController:
         def __init__(self) -> None:
-            self.volume = Mixer()
+            self.device = Mixer()
 
         def setVolume(self, volume: int) -> None:
-            self.volume.setvolume(volume)
+            self.device.setvolume(volume)
 
         def getVolume(self) -> int:
-            return self.volume.getvolume()[0]
+            return self.device.getvolume()[0]
