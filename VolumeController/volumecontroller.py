@@ -1,4 +1,5 @@
 from platform import system
+from re import search
 
 platform = system().lower().strip()
 
@@ -13,12 +14,9 @@ if platform == "darwin":
             osascript(f"set volume output volume {volume}")
 
         def getVolume(self) -> int:
-            volChoose = {"output": 0, "input": 1, "alert": 2}
-            result = osascript("get volume settings")
-            volume = (
-                result[1].split(",")[volChoose["output"]].replace(f"output volume:", "")
-            )
-            return int(volume)
+            result = osascript("get volume settings")[1]
+            result = search("output volume:([0-9]+)", result)
+            return int(result.groups()[0])
 
 elif platform == "windows":
     from ctypes import POINTER, cast
