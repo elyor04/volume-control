@@ -1,6 +1,7 @@
 # volume-control-by-hand
 * ### Works on MacOS, Windows, Linux
 
+
 ## Install on MacOS
 ```
 pip install --upgrade mediapipe osascript
