@@ -40,7 +40,7 @@ pip install --upgrade msvc-runtime
 
 ```python
 cap = cv.VideoCapture("http://192.168.0.100:8080/video")
-aud = VolumeController()
+vol = VolumeController()
 hands = mp_hands.Hands(max_num_hands=2, model_complexity=0)
 
 wd, hg = int(cap.get(3) * 0.5), int(cap.get(4) * 0.5)
