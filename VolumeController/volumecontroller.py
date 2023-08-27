@@ -9,18 +9,16 @@ if platform == "darwin":
         def __init__(self) -> None:
             pass
 
-        def setVolume(self, volume: int, volType: str = "output") -> None:
+        def setVolume(self, volume: int) -> None:
             """volType: output, input, alert"""
-            osascript(f"set volume {volType} volume {volume}")
+            osascript(f"set volume output volume {volume}")
 
-        def getVolume(self, volType: str = "output") -> int:
+        def getVolume(self) -> int:
             """volType: output, input, alert"""
             volChoose = {"output": 0, "input": 1, "alert": 2}
             result = osascript("get volume settings")
             volume = (
-                result[1]
-                .split(",")[volChoose[volType]]
-                .replace(f"{volType} volume:", "")
+                result[1].split(",")[volChoose["output"]].replace(f"output volume:", "")
             )
             return int(volume)
 
@@ -49,7 +47,9 @@ elif platform == "windows":
             self.device.SetMasterVolumeLevel(self.volumes[volume], None)
 
         def getVolume(self) -> float:
-            return self.device.GetMasterVolumeLevel()
+            volume = self.volumes.index(self.device.GetMasterVolumeLevel())
+            volume = int(100 / len(self.volumes) * volume)
+            return max(min(volume, 100), 0)
 
 elif platform == "linux":
     from alsaaudio import Mixer
