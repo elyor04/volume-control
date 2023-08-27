@@ -5,7 +5,7 @@ platform = system().lower().strip()
 if platform == "darwin":
     from osascript import osascript
 
-    class AudioController:
+    class VolumeController:
         def __init__(self) -> None:
             pass
 
@@ -29,7 +29,7 @@ elif platform == "windows":
     from comtypes import CLSCTX_ALL
     from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
-    class AudioController:
+    class VolumeController:
         def __init__(self) -> None:
             devices = AudioUtilities.GetSpeakers()
             interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
@@ -56,7 +56,7 @@ elif platform == "windows":
 elif platform == "linux":
     from alsaaudio import Mixer
 
-    class AudioController:
+    class VolumeController:
         def __init__(self) -> None:
             self.volume = Mixer()
 

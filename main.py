@@ -1,6 +1,6 @@
 import cv2 as cv
 from mediapipe import solutions
-from AudioController import AudioController
+from VolumeController import VolumeController
 from math import hypot
 from typing import Union
 from threading import Timer
@@ -39,7 +39,7 @@ def setCheckerTrue() -> None:
 
 
 cap = cv.VideoCapture(0)
-aud = AudioController()
+aud = VolumeController()
 hands = mp_hands.Hands(max_num_hands=2, model_complexity=0)
 
 wd, hg = int(cap.get(3)), int(cap.get(4))
