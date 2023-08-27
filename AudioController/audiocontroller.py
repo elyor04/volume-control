@@ -45,13 +45,23 @@ elif platform == "windows":
                 r1 += r3
             return r_lst
 
-        def getVolume(self) -> float:
-            return self.volume.GetMasterVolumeLevel()
-
         def setVolume(self, vol_index: int = None, vol_val: float = None) -> None:
             if vol_index is not None:
                 vol_val = self.vol_vals[min(vol_index, self._val_n - 5)]
             self.volume.SetMasterVolumeLevel(vol_val, None)
+        
+        def getVolume(self) -> float:
+            return self.volume.GetMasterVolumeLevel()
 
 elif platform == "linux":
-    pass
+    from alsaaudio import Mixer
+    
+    class AudioController:
+        def __init__(self) -> None:
+            self.volume = Mixer()
+        
+        def setVolume(self, volume: int) -> None:
+            self.volume.setvolume(volume)
+        
+        def getVolume(self) -> int:
+            return self.volume.getvolume()[0]
