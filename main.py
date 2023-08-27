@@ -39,7 +39,7 @@ def setCheckerTrue() -> None:
 
 
 cap = cv.VideoCapture(0)
-aud = VolumeController()
+vol = VolumeController()
 hands = mp_hands.Hands(max_num_hands=2, model_complexity=0)
 
 wd, hg = int(cap.get(3)), int(cap.get(4))
@@ -79,7 +79,7 @@ while True:
             percents = percents[:5]
             percent = sum(percents) // 5
             if percent != last_perc:
-                aud.setVolume(percent)
+                vol.setVolume(percent)
                 last_perc = percent
             checker = False
             _tm = Timer(0.1, setCheckerTrue)
