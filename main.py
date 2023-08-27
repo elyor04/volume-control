@@ -46,7 +46,7 @@ wd, hg = int(cap.get(3)), int(cap.get(4))
 checker, percents = True, []
 last_perc = 0
 
-while cap.isOpened():
+while True:
     success, image = cap.read()
     if not success:
         print("Ignoring empty camera frame.")
