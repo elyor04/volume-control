@@ -36,7 +36,7 @@ elif platform == "windows":
 
             self.device = cast(interface, POINTER(IAudioEndpointVolume))
             self.volumes = self._range(*self.device.GetVolumeRange())
-            self._n = len(self.volumeRange) - 1
+            self._n = len(self.volumes) - 1
 
         def _range(self, r1: float, r2: float, r3: float) -> list:
             rList = list()
