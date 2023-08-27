@@ -22,7 +22,7 @@ pip install --upgrade mediapipe
 ## Known issues
 
 ### If you have this problem on Windows
-```bash
+```
 Traceback (most recent call last):
   File "C:\Users\tuxta\OneDrive\Desktop\volume-control\main.py", line 2, in <module>
     from mediapipe import solutions
@@ -32,4 +32,7 @@ Traceback (most recent call last):
     from mediapipe.python._framework_bindings import resource_util
 ImportError: DLL load failed while importing _framework_bindings: The specified module could not be found.
 ```
-### Run this command `pip install --upgrade msvc-runtime`
+### Run this command
+```
+pip install --upgrade msvc-runtime
+```
