@@ -10,11 +10,9 @@ if platform == "darwin":
             pass
 
         def setVolume(self, volume: int) -> None:
-            """volType: output, input, alert"""
             osascript(f"set volume output volume {volume}")
 
         def getVolume(self) -> int:
-            """volType: output, input, alert"""
             volChoose = {"output": 0, "input": 1, "alert": 2}
             result = osascript("get volume settings")
             volume = (
