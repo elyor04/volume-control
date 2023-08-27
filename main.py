@@ -26,7 +26,7 @@ def getPercent(
             for ((x1, y1, z1), (x2, y2, z2)) in f_cord
         ]
     )
-    percent = min(int((percent / f_len) * 55), 100)
+    percent = min(int((percent / f_len) * 60), 100)
 
     pt1 = mp_drawing._normalized_to_pixel_coordinates(x1, y1, im_wd, im_hg)
     pt2 = mp_drawing._normalized_to_pixel_coordinates(x2, y2, im_wd, im_hg)
