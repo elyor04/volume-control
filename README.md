@@ -36,21 +36,3 @@ ImportError: DLL load failed while importing _framework_bindings: The specified 
 ```
 pip install --upgrade msvc-runtime
 ```
-
-
-```python
-cap = cv.VideoCapture("http://192.168.0.100:8080/video")
-vol = VolumeController()
-hands = mp_hands.Hands(max_num_hands=2, model_complexity=0)
-
-wd, hg = int(cap.get(3) * 0.5), int(cap.get(4) * 0.5)
-checker, percents = True, []
-last_perc = 0
-
-while True:
-    success, image = cap.read()
-    if not success:
-        print("Ignoring empty camera frame.")
-        continue
-    image = cv.flip(cv.resize(image, None, fx=0.5, fy=0.5, interpolation=cv.INTER_AREA), 1)
-```
