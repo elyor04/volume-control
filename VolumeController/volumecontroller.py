@@ -43,13 +43,13 @@ elif platform == "windows":
 
         def setVolume(self, volume: int) -> None:
             volume = int(len(self.volumes) / 100 * volume)
-            volume = max(min(volume, len(self.volumes) - 1), 0)
+            volume = max(min(volume - 1, len(self.volumes) - 1), 0)
             self.device.SetMasterVolumeLevel(self.volumes[volume], None)
 
         def getVolume(self) -> int:
             volume = self.volumes.index(self.device.GetMasterVolumeLevel())
             volume = int(100 / len(self.volumes) * volume)
-            return max(min(volume, 100), 0)
+            return max(min(volume + 1, 100), 0)
 
 elif platform == "linux":
     from alsaaudio import Mixer
