@@ -46,7 +46,7 @@ elif platform == "windows":
             volume = max(min(volume, len(self.volumes) - 1), 0)
             self.device.SetMasterVolumeLevel(self.volumes[volume], None)
 
-        def getVolume(self) -> float:
+        def getVolume(self) -> int:
             volume = self.volumes.index(self.device.GetMasterVolumeLevel())
             volume = int(100 / len(self.volumes) * volume)
             return max(min(volume, 100), 0)
