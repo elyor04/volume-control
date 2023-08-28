@@ -49,3 +49,7 @@ elif platform == "linux":
 
         def getVolume(self) -> int:
             return self.device.getvolume()[0]
+
+else:
+    print("This platform is not supported")
+    exit(0)
