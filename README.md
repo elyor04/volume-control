@@ -1,10 +1,11 @@
 # volume-control-by-hand
-* ### Works on MacOS, Windows and Linux
+* ### Works on Linux, Windows and MacOS
 
 
-## Install on MacOS
+## Install on Linux
 ```
-pip install --upgrade mediapipe osascript
+sudo apt -y install python3-pip python3-alsaaudio
+pip install --upgrade mediapipe
 ```
 
 ## Install on Windows
@@ -12,10 +13,9 @@ pip install --upgrade mediapipe osascript
 pip install --upgrade mediapipe pycaw
 ```
 
-## Install on Linux
+## Install on MacOS
 ```
-sudo apt -y install python3-pip python3-alsaaudio
-pip install --upgrade mediapipe
+pip install --upgrade mediapipe osascript
 ```
 
 

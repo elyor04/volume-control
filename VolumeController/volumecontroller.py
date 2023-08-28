@@ -3,20 +3,18 @@ from re import search
 
 platform = system().lower().strip()
 
-if platform == "darwin":
-    from osascript import osascript
+if platform == "linux":
+    from alsaaudio import Mixer
 
     class VolumeController:
         def __init__(self) -> None:
-            pass
+            self.device = Mixer()
 
         def setVolume(self, volume: int) -> None:
-            osascript(f"set volume output volume {volume}")
+            self.device.setvolume(volume)
 
         def getVolume(self) -> int:
-            result = osascript("get volume settings")[1]
-            result = search("output volume:([0-9]+)", result)
-            return int(result.groups()[0])
+            return self.device.getvolume()[0]
 
 elif platform == "windows":
     from ctypes import POINTER, cast
@@ -37,18 +35,20 @@ elif platform == "windows":
             volume = self.device.GetMasterVolumeLevelScalar()
             return round(volume * 100)
 
-elif platform == "linux":
-    from alsaaudio import Mixer
+elif platform == "darwin":
+    from osascript import osascript
 
     class VolumeController:
         def __init__(self) -> None:
-            self.device = Mixer()
+            pass
 
         def setVolume(self, volume: int) -> None:
-            self.device.setvolume(volume)
+            osascript(f"set volume output volume {volume}")
 
         def getVolume(self) -> int:
-            return self.device.getvolume()[0]
+            result = osascript("get volume settings")[1]
+            result = search("output volume:([0-9]+)", result)
+            return int(result.groups()[0])
 
 else:
     print("This platform is not supported")
