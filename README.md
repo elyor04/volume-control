@@ -36,3 +36,26 @@ ImportError: DLL load failed while importing _framework_bindings: The specified 
 ```
 pip install --upgrade msvc-runtime
 ```
+
+
+```python
+from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume
+
+class Volume:
+    def __init__(self):
+        self.devices = AudioUtilities.GetSpeakers()
+        self.interface = self.devices.Activate(ISimpleAudioVolume._iid_, 1, None)
+        self.volume = self.interface.QueryInterface(ISimpleAudioVolume)
+
+    def set_volume(self, level):
+        # level should be between 0.0 and 1.0
+        self.volume.SetMasterVolume(level, None)
+
+    def get_volume(self):
+        return self.volume.GetMasterVolume()
+
+
+v = Volume()
+v.set_volume(0.5)  # set volume to 50%
+print(v.get_volume())  # Output: 0.5
+```
