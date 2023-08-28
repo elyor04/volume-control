@@ -1,5 +1,4 @@
 from platform import system
-from numpy import interp
 from re import search
 
 platform = system().lower().strip()
