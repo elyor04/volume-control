@@ -39,23 +39,24 @@ pip install --upgrade msvc-runtime
 
 
 ```python
-from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume
+from ctypes import cast, POINTER
+from comtypes import CLSCTX_ALL
+from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+import numpy as np
 
-class Volume:
-    def __init__(self):
-        self.devices = AudioUtilities.GetSpeakers()
-        self.interface = self.devices.Activate(ISimpleAudioVolume._iid_, 1, None)
-        self.volume = self.interface.QueryInterface(ISimpleAudioVolume)
+devices = AudioUtilities.GetSpeakers()
+interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+volume = cast(interface, POINTER(IAudioEndpointVolume))
 
-    def set_volume(self, level):
-        # level should be between 0.0 and 1.0
-        self.volume.SetMasterVolume(level, None)
+desired_vol = 50
 
-    def get_volume(self):
-        return self.volume.GetMasterVolume()
+vol_range = volume.GetVolumeRange()
+min_vol = vol_range[0]
+max_vol = vol_range[1]
 
+desired_vol_db = np.interp(desired_vol, [0, 100], [min_vol, max_vol])
+volume.SetMasterVolumeLevelScalar(desired_vol / 100, None)
 
-v = Volume()
-v.set_volume(0.5)  # set volume to 50%
-print(v.get_volume())  # Output: 0.5
+curr_vol = round(volume.GetMasterVolumeLevelScalar() * 100)
+print(f'Volume set to: {int(curr_vol)} %')
 ```
