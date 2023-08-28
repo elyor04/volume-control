@@ -1,5 +1,5 @@
 # volume-control-by-hand
-* ### Works on MacOS, Windows, Linux
+* ### Works on MacOS, Windows and Linux
 
 
 ## Install on MacOS
