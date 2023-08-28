@@ -12,7 +12,7 @@ CoordinateOrNone = Union[tuple[int, int], None]
 
 
 def getPercent(
-    cords: list, im_wd: int, im_hg: int
+    cords: list, imgSize: tuple[int, int]
 ) -> tuple[int, CoordinateOrNone, CoordinateOrNone]:
     x1, y1, z1 = cords[-1][4]
     x2, y2, z2 = cords[-1][8]
@@ -28,8 +28,8 @@ def getPercent(
     )
     percent = min(int((percent / f_len) * 60), 100)
 
-    pt1 = mp_drawing._normalized_to_pixel_coordinates(x1, y1, im_wd, im_hg)
-    pt2 = mp_drawing._normalized_to_pixel_coordinates(x2, y2, im_wd, im_hg)
+    pt1 = mp_drawing._normalized_to_pixel_coordinates(x1, y1, *imgSize)
+    pt2 = mp_drawing._normalized_to_pixel_coordinates(x2, y2, *imgSize)
     return (percent, pt1, pt2)
 
 
@@ -42,7 +42,7 @@ cap = cv.VideoCapture(0)
 vol = VolumeController()
 hands = mp_hands.Hands(max_num_hands=2, model_complexity=0)
 
-wd, hg = int(cap.get(3)), int(cap.get(4))
+imgSize = (int(cap.get(3)), int(cap.get(4)))
 checker, percents = True, []
 last_perc = 0
 
@@ -66,7 +66,7 @@ while True:
             [(land.x, land.y, land.z) for land in lands.landmark]
             for lands in hand_landmarks
         ]
-        percent, pt1, pt2 = getPercent(coordinates, wd, hg)
+        percent, pt1, pt2 = getPercent(coordinates, imgSize)
         percents.insert(0, percent)
         for landmarks in hand_landmarks:
             mp_drawing.draw_landmarks(image, landmarks, mp_hands.HAND_CONNECTIONS)
