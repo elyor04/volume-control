@@ -9,7 +9,7 @@ pip install --upgrade mediapipe osascript
 
 ## Install on Windows
 ```
-pip install --upgrade mediapipe osascript comtypes pycaw
+pip install --upgrade mediapipe pycaw
 ```
 
 ## Install on Linux
