@@ -29,11 +29,10 @@ elif platform == "windows":
             devices = AudioUtilities.GetSpeakers()
             interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
             self.device = cast(interface, POINTER(IAudioEndpointVolume))
-            self.volRange = self.device.GetVolumeRange()
 
         def setVolume(self, volume: int) -> None:
-            volume = interp(volume, [0, 100], *self.volRange[:2])
-            self.device.SetMasterVolumeLevelScalar(volume / 100, None)
+            volume /= 100
+            self.device.SetMasterVolumeLevelScalar(volume, None)
 
         def getVolume(self) -> int:
             volume = self.device.GetMasterVolumeLevelScalar()
