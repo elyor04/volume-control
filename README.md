@@ -36,27 +36,3 @@ ImportError: DLL load failed while importing _framework_bindings: The specified 
 ```
 pip install --upgrade msvc-runtime
 ```
-
-
-```python
-from ctypes import cast, POINTER
-from comtypes import CLSCTX_ALL
-from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
-import numpy as np
-
-devices = AudioUtilities.GetSpeakers()
-interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-volume = cast(interface, POINTER(IAudioEndpointVolume))
-
-desired_vol = 50
-
-vol_range = volume.GetVolumeRange()
-min_vol = vol_range[0]
-max_vol = vol_range[1]
-
-desired_vol_db = np.interp(desired_vol, [0, 100], [min_vol, max_vol])
-volume.SetMasterVolumeLevelScalar(desired_vol / 100, None)
-
-curr_vol = round(volume.GetMasterVolumeLevelScalar() * 100)
-print(f'Volume set to: {int(curr_vol)} %')
-```
