@@ -2,6 +2,13 @@
 * ### Works on Linux, Windows and MacOS
 
 
+<div align="center">
+<h2>How does the program look like?</h2>
+<img src="https://github.com/elyor04/volume-control/blob/main/data/hand.gif" alt="Hand" border="0"><br>
+<img src="https://github.com/elyor04/volume-control/blob/main/data/volume.gif" alt="Volume" border="0"><br>
+</div>
+
+
 ## Install on Linux
 ```
 sudo apt -y install python3-pip python3-alsaaudio

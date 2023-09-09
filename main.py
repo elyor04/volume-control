@@ -38,7 +38,7 @@ def setCheckerTrue() -> None:
     checker = True
 
 
-cap = cv.VideoCapture(0)
+cap = cv.VideoCapture(1)
 vol = VolumeController()
 hands = mp_hands.Hands(max_num_hands=2, model_complexity=0)
 
